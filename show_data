@@ -37,13 +37,8 @@ def read_data(filename):
 
 
 def show_water_data(dates, values):
-    print(dates)
-    print(values)
-
     diff = [dates[k+1] - dates[k] for k in range(len(dates) - 1)]
     diff_in_hours = [d.days * 24 + d.seconds / 3600. for d in diff]
-
-    print(diff_in_hours)
 
     warm_m3_per_year = [
         (values['warm'][k+1] - values['warm'][k]) / diff_in_hours[k] * 24 * 365
@@ -67,7 +62,7 @@ def show_water_data(dates, values):
     ax1 = plt.gca()
 
     ax1.set_title('Water consumption')
-    ytop = 1.1 * max(max(y_warm), max(y_cold))
+    ytop = 1.1 * max([s0 + s1 for s0, s1 in zip(y_warm, y_cold)])
     ax1.set_ylim(0, ytop)
     ax1.set_ylabel('m^3 per year')
 
