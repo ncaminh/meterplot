@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
+from matplotlib import style
 from datetime import datetime
 import yaml
+
+style.use('ggplot')
 
 
 def read_data(filename):
@@ -39,6 +42,7 @@ def show_data(dates, values):
         [dates[-1]]
     #
     y = [val for val in wattages for _ in (0, 1)]
+
     plt.plot_date(x, y, marker='')
     # matplotlib2.0's default green
     plt.gca().fill_between(x, y, color='#2ca02c')
