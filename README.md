@@ -4,17 +4,22 @@ This little script takes a number of energy measurements (e.g., from your
 electricity meter or old power bills) and displays the wattage over time.
 
 For example, with the data file
-```
-- date: 2016-01-01 00:00
-  value: 1000
-- date: 2016-02-01 00:00
-  value: 1200
-- date: 2016-04-01 00:00
-  value: 2000
-- date: 2016-07-01 00:00
-  value: 3500
-- date: 2016-10-01 00:00
-  value: 4000
+```yaml
+# electricity data
+---
+type: electricity
+unit: kWh
+data:
+  - date: 2016-01-01 00:00
+    value: 1000
+  - date: 2016-02-01 00:00
+    value: 1200
+  - date: 2016-04-01 00:00
+    value: 2000
+  - date: 2016-07-01 00:00
+    value: 3500
+  - date: 2016-10-01 00:00
+    value: 4000
 ```
 you'll get
 ```

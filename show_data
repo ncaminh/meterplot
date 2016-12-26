@@ -10,34 +10,84 @@ import yaml
 def read_data(filename):
     stream = open(filename, 'r')
     docs = yaml.load_all(stream)
-    dates = []
+    datetimes = []
     values = []
     for doc in docs:
-        for d in doc:
-            dates.append(datetime.strptime(d['date'], '%Y-%m-%d %H:%M'))
-            values.append(d['value'])
+        unit = doc['unit']
+        datetimes = [
+            datetime.strptime(d['date'], '%Y-%m-%d %H:%M')
+            for d in doc['data']
+            ]
+        # sort
+        idx = sorted(range(len(datetimes)), key=lambda k: datetimes[k])
+        datetimes = [datetimes[k] for k in idx]
 
-    # sort by date
-    idx = sorted(range(len(dates)), key=lambda k: dates[k])
-    dates = [dates[k] for k in idx]
-    values = [values[k] for k in idx]
+        tpe = doc['type']
+        assert tpe in ['water', 'electricity']
 
-    return dates, values
+        if tpe == 'water':
+            values = {
+                'warm': [doc['data'][k]['warm'] for k in idx],
+                'cold': [doc['data'][k]['cold'] for k in idx],
+                }
+        else:  # type: electricity
+            values = [doc['data'][k]['value'] for k in idx]
+
+    return tpe, datetimes, values
 
 
-def show_data(dates, values):
+def show_water_data(dates, values):
+    print(dates)
+    print(values)
+
+    diff = [dates[k+1] - dates[k] for k in range(len(dates) - 1)]
+    diff_in_hours = [d.days * 24 + d.seconds / 3600. for d in diff]
+
+    print(diff_in_hours)
+
+    warm_m3_per_year = [
+        (values['warm'][k+1] - values['warm'][k]) / diff_in_hours[k] * 24 * 365
+        for k in range(len(values['warm']) - 1)
+        ]
+    cold_m3_per_year = [
+        (values['cold'][k+1] - values['cold'][k]) / diff_in_hours[k] * 24 * 365
+        for k in range(len(values['cold']) - 1)
+        ]
+
+    # duplicate all interior values
+    x = [dates[0]] + \
+        [date for date in dates[1:-1] for _ in (0, 1)] + \
+        [dates[-1]]
+    #
+    y_warm = [val for val in warm_m3_per_year for _ in (0, 1)]
+    y_cold = [val for val in cold_m3_per_year for _ in (0, 1)]
+
+    plt.stackplot(x, (y_warm, y_cold), colors=('#d62728', '#1f77b4'))
+
+    ax1 = plt.gca()
+
+    ax1.set_title('Water consumption')
+    ytop = 1.1 * max(max(y_warm), max(y_cold))
+    ax1.set_ylim(0, ytop)
+    ax1.set_ylabel('m^3 per year')
+
+    ax2 = ax1.twinx()
+    ax2.set_ylim(0, ytop * 1000 / 365.)
+    ax2.set_ylabel('liters per day')
+
+    return
+
+
+def show_electricity_data(dates, values):
     # Get the average wattage between two datetimes. Since the values are in
     # kWh, divide by the number of hours.
     diff = [dates[k+1] - dates[k] for k in range(len(dates) - 1)]
     diff_in_hours = [d.days * 24 + d.seconds / 3600. for d in diff]
 
-    wattages = [
-        (values[k+1] - values[k]) / diff_in_hours[k] * 1000.
+    kwh_per_year = [
+        (values[k+1] - values[k]) / diff_in_hours[k] * 24 * 365
         for k in range(len(values) - 1)
         ]
-
-    # scale
-    kwh_per_year = [watt * 24 * 365 / 1000.0 for watt in wattages]
 
     # duplicate all interior values
     x = [dates[0]] + \
@@ -82,6 +132,10 @@ if __name__ == '__main__':
     args = _parse_cmd_arguments()
     infile = args.infile
 
-    dates, values = read_data(infile)
-    show_data(dates, values)
+    tpe, dates, values = read_data(infile)
+    assert tpe in ['water', 'electricity']
+    if tpe == 'water':
+        show_water_data(dates, values)
+    else:  # electricity
+        show_electricity_data(dates, values)
     plt.show()
