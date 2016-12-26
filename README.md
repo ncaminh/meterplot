@@ -1,7 +1,7 @@
 # watts
 
 This little script takes a number of energy measurements (e.g., from your
-electricity meter) and displays the wattage over time.
+electricity meter or old power bills) and displays the wattage over time.
 
 For example, with the data file
 ```
