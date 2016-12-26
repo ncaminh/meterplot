@@ -21,6 +21,8 @@ you'll get
 ./show_data test.yml
 ```
 
+![](https://nschloe.github.io/watts/example.png)
+
 The `value`s are assumed to be given in kWh.
 
 ### License
