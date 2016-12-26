@@ -18,7 +18,7 @@ For example, with the data file
 ```
 you'll get
 ```
-./show_data data.yml
+./show_data test.yml
 ```
 
 The `value`s are assumed to be given in kWh.
