@@ -6,15 +6,15 @@ electricity meter or old power bills) and displays the wattage over time.
 For example, with the data file
 ```
 - date: 2016-01-01 00:00
-  value: 10
+  value: 1000
 - date: 2016-02-01 00:00
-  value: 12
+  value: 1200
 - date: 2016-04-01 00:00
-  value: 20
+  value: 2000
 - date: 2016-07-01 00:00
-  value: 35
+  value: 3500
 - date: 2016-10-01 00:00
-  value: 40
+  value: 4000
 ```
 you'll get
 ```
