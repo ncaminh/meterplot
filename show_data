@@ -1,63 +1,156 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
-from matplotlib import style
-from datetime import datetime
+# from datetime import datetime
+from itertools import groupby
 import yaml
-
-# style.use('ggplot')
 
 
 def read_data(filename):
     stream = open(filename, 'r')
     docs = yaml.load_all(stream)
-    datetimes = []
-    values = []
-    for doc in docs:
-        unit = doc['unit']
-        datetimes = [
-            datetime.strptime(d['date'], '%Y-%m-%d %H:%M')
-            for d in doc['data']
-            ]
-        # sort
-        idx = sorted(range(len(datetimes)), key=lambda k: datetimes[k])
-        datetimes = [datetimes[k] for k in idx]
+    d = [doc for doc in docs]
+    assert len(d) == 1
+    doc = d[0]
 
-        tpe = doc['type']
-        assert tpe in ['water', 'electricity']
+    tpe = doc['type']
+    assert tpe in ['water', 'electricity']
 
-        if tpe == 'water':
-            values = {
-                'warm': [doc['data'][k]['warm'] for k in idx],
-                'cold': [doc['data'][k]['cold'] for k in idx],
-                }
-        else:  # type: electricity
-            values = [doc['data'][k]['value'] for k in idx]
+    data = []
+    for group in doc['groups']:
+        data.append([])
+        for meter in group['meters']:
+            # assert that the dates are sorted chronologically
+            datetimes = [datum['date'] for datum in meter['data']]
+            for k in range(len(datetimes) - 1):
+                diff = datetimes[k+1] - datetimes[k]
+                diff_in_secs = diff.days * 24 * 3600 + diff.seconds
+                assert diff_in_secs > 0
 
-    return tpe, datetimes, values
+            data[-1].append({
+                'datetimes': datetimes,
+                'values': [datum['value'] for datum in meter['data']]
+                })
+
+    return tpe, data
 
 
-def show_water_data(dates, values):
-    diff = [dates[k+1] - dates[k] for k in range(len(dates) - 1)]
-    diff_in_hours = [d.days * 24 + d.seconds / 3600. for d in diff]
+def harmonize_x_values(X, Y):
+    '''Input data:
+    X ... list of datetime objects, len(X[k]) == n[k]
+    Y ... list of values _between_ two datetimes, len(Y[k]) == len(X[k]) - 1
+
+    This returns _one_ datetime list, namely the union of all X, and the
+    corresponding Ys.
+    '''
+    for x, y in zip(X, Y):
+        assert len(Y) == len(X) - 1
+
+    X_combined = sorted(sum(X, []))
+    X_combined = [x[0] for x in groupby(X_combined)]
+
+    print('YY')
+    print(Y)
+    y_new = []
+    for x, y in zip(X, Y):
+        print('new Y')
+        y_new.append([])
+        for xc in x_combined:
+            # linear interpolation for y at x
+            print('next')
+            for k in range(len(x) - 1):
+                # xc = x[k] + alpha * (x[k+1] - x[k])  with  0<=alpha<=1?
+                d1 = xc - x[k]
+                d2 = x[k+1] - x[k]
+
+                d1_in_seconds = d1.days * 24 * 3600 + d1.seconds
+                d2_in_seconds = d2.days * 24 * 3600 + d2.seconds
+                if d2_in_seconds > 0:
+                    alpha = d1_in_seconds / d2_in_seconds
+                    print('  %d' % alpha)
+                    if 0.0 <= alpha and alpha <= 1.0:
+                        print('  k')
+                        y_new[-1].append(
+                            y[k] + alpha * (y[k+1] - y[k])
+                            )
+                        break
+
+    return x_combined, y_new
+
+
+def show_water_data(data):
+    datetime_warm = [d[0] for d in data['warm']]
+    values_warm = [d[1] for d in data['warm']]
+
+    datetime_cold = [d[0] for d in data['cold']]
+    values_cold = [d[1] for d in data['cold']]
+
+    diff_warm = [
+        datetime_warm[k+1] - datetime_warm[k]
+        for k in range(len(datetime_warm) - 1)
+        ]
+    diff_warm_in_hours = [d.days * 24 + d.seconds / 3600. for d in diff_warm]
+
+    diff_cold = [
+        datetime_cold[k+1] - datetime_cold[k]
+        for k in range(len(datetime_cold) - 1)
+        ]
+    diff_cold_in_hours = [d.days * 24 + d.seconds / 3600. for d in diff_cold]
 
     warm_m3_per_year = [
-        (values['warm'][k+1] - values['warm'][k]) / diff_in_hours[k] * 24 * 365
-        for k in range(len(values['warm']) - 1)
+        (values_warm[k+1] - values_warm[k]) / diff_warm_in_hours[k] * 24 * 365
+        for k in range(len(values_warm) - 1)
+        if diff_warm_in_hours[k] > 0.0
         ]
+    # remove consectutive duplicates
+    datetime_warm = [x[0] for x in groupby(datetime_warm)]
+
     cold_m3_per_year = [
-        (values['cold'][k+1] - values['cold'][k]) / diff_in_hours[k] * 24 * 365
-        for k in range(len(values['cold']) - 1)
+        (values_cold[k+1] - values_cold[k]) / diff_cold_in_hours[k] * 24 * 365
+        for k in range(len(values_cold) - 1)
+        if diff_cold_in_hours[k] > 0.0
         ]
+    # remove consectutive duplicates
+    datetime_cold = [x[0] for x in groupby(datetime_cold)]
+
+    # print(x, y)
+    print(datetime_warm)
+    print(warm_m3_per_year)
+    print(datetime_cold)
+    print(cold_m3_per_year)
+    exit(1)
+    x, y = harmonize_x_values(
+        [datetime_warm, datetime_cold],
+        [warm_m3_per_year, cold_m3_per_year],
+        )
+    exit(1)
 
     # duplicate all interior values
-    x = [dates[0]] + \
-        [date for date in dates[1:-1] for _ in (0, 1)] + \
-        [dates[-1]]
+    x_warm = [datetime_warm[0]] + \
+        [d for d in datetime_warm[1:-1] for _ in (0, 1)] + \
+        [datetime_warm[-1]]
+    x_cold = [datetime_cold[0]] + \
+        [d for d in datetime_cold[1:-1] for _ in (0, 1)] + \
+        [datetime_cold[-1]]
     #
     y_warm = [val for val in warm_m3_per_year for _ in (0, 1)]
     y_cold = [val for val in cold_m3_per_year for _ in (0, 1)]
 
-    plt.stackplot(x, (y_warm, y_cold), colors=('#d62728', '#1f77b4'))
+    print(x_warm)
+    print(y_warm)
+    print
+    print(x_cold)
+    print(y_cold)
+
+    # make sure the x values are all the same -- necessary for stackplot
+    print('warm/cold')
+    print(x_warm, x_cold)
+    print(y_warm, y_cold)
+    print
+
+    plt.stackplot(
+        x, y,
+        colors=('#d62728', '#1f77b4')
+        )
 
     ax1 = plt.gca()
 
@@ -73,25 +166,72 @@ def show_water_data(dates, values):
     return
 
 
-def show_electricity_data(dates, values):
-    # Get the average wattage between two datetimes. Since the values are in
-    # kWh, divide by the number of hours.
-    diff = [dates[k+1] - dates[k] for k in range(len(dates) - 1)]
-    diff_in_hours = [d.days * 24 + d.seconds / 3600. for d in diff]
+def _parse_cmd_arguments():
+    import argparse
+    parser = argparse.ArgumentParser(
+        description='Show energy consumption data'
+        )
+    parser.add_argument(
+            'infile',
+            type=str,
+            help='input data YAML file'
+            )
+    return parser.parse_args()
 
-    kwh_per_year = [
-        (values[k+1] - values[k]) / diff_in_hours[k] * 24 * 365
-        for k in range(len(values) - 1)
-        ]
 
-    # duplicate all interior values
-    x = [dates[0]] + \
-        [date for date in dates[1:-1] for _ in (0, 1)] + \
-        [dates[-1]]
-    #
-    y = [val for val in kwh_per_year for _ in (0, 1)]
+def average_per_second(datetimes, values):
+    '''Input: datetime, values
+    Output: average value per second between the datetimes
+    '''
+    assert len(datetimes) == len(values)
 
-    plt.plot_date(x, y, marker='')
+    aps = []
+    for k in range(len(datetimes) - 1):
+        diff = datetimes[k+1] - datetimes[k]
+        diff_in_secs = diff.days * 24 * 3600 + diff.seconds
+        assert diff_in_secs > 0
+
+        aps.append(
+            (values[k+1] - values[k]) / float(diff_in_secs)
+            )
+
+    return aps
+
+
+def merge_meters(meters):
+    # merge datetimes
+    datetimes_combined = sorted(sum(
+        [meter['datetimes'] for meter in meters], []
+        ))
+
+    # now iterate over the intervals and collect the average values
+    averages_combined = [0.0] * (len(datetimes_combined) - 1)
+    for meter in meters:
+        for k in range(len(meter['datetimes']) - 1):
+            # find the beginning of the interval
+            k0 = datetimes_combined.index(meter['datetimes'][k])
+            k1 = datetimes_combined.index(meter['datetimes'][k+1])
+            # add the average value to all intervals between beginning and end
+            for kk in range(k0, k1):
+                averages_combined[kk] += meter['aps'][k]
+
+    return {'datetimes': datetimes_combined, 'aps': averages_combined}
+
+
+def show(data):
+    for group in data:
+        # duplicate all interior values for plotting the discontinuous data set
+        dt = group['datetimes']
+        # average per second -> average per year
+        values = [val * (365 * 24 * 3600) for val in group['aps']]
+
+        x = [dt[0]] + \
+            [d for d in dt[1:-1] for _ in (0, 1)] + \
+            [dt[-1]]
+        #
+        y = [val for val in values for _ in (0, 1)]
+
+        plt.plot_date(x, y, marker='')
 
     ax1 = plt.gca()
     ax2 = ax1.twinx()
@@ -110,27 +250,25 @@ def show_electricity_data(dates, values):
     return
 
 
-def _parse_cmd_arguments():
-    import argparse
-    parser = argparse.ArgumentParser(
-        description='Show energy consumption data'
-        )
-    parser.add_argument(
-            'infile',
-            type=str,
-            help='input data YAML file'
-            )
-    return parser.parse_args()
-
-
 if __name__ == '__main__':
     args = _parse_cmd_arguments()
     infile = args.infile
 
-    tpe, dates, values = read_data(infile)
-    assert tpe in ['water', 'electricity']
-    if tpe == 'water':
-        show_water_data(dates, values)
-    else:  # electricity
-        show_electricity_data(dates, values)
+    tpe, data = read_data(infile)
+    # add average per second between the datetimes
+    for group in data:
+        for meter in group:
+            meter['aps'] = average_per_second(
+                meter['datetimes'],
+                meter['values']
+                )
+
+    # merge across meters
+    data = [merge_meters(group) for group in data]
+    print
+    print('data')
+    print(data)
+
+    show(data)
+
     plt.show()
