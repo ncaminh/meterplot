@@ -219,6 +219,9 @@ def merge_meters(meters):
 
 
 def show(data):
+    # TODO
+    # harmonize x values across all groups
+
     for group in data:
         # duplicate all interior values for plotting the discontinuous data set
         dt = group['datetimes']
@@ -231,12 +234,15 @@ def show(data):
         #
         y = [val for val in values for _ in (0, 1)]
 
-        plt.plot_date(x, y, marker='')
+    plt.stackplot(
+        x, y,
+        # colors=('#d62728', '#1f77b4')
+        colors=('#2ca02c', )
+        )
 
     ax1 = plt.gca()
     ax2 = ax1.twinx()
 
-    ax1.set_title('Energy consumption')
     ytop = 1.1 * max(y)
     ax1.set_ylim(0, ytop)
     ax1.set_ylabel('kWh per year')
@@ -244,8 +250,7 @@ def show(data):
     ax2.set_ylim(0, ytop * 1000 / (24 * 365.))
     ax2.set_ylabel('W')
 
-    # matplotlib2.0's default green
-    ax1.fill_between(x, y, color='#2ca02c')
+    # ax1.fill_between(x, y, color='#2ca02c')
 
     return
 
@@ -265,10 +270,8 @@ if __name__ == '__main__':
 
     # merge across meters
     data = [merge_meters(group) for group in data]
-    print
-    print('data')
-    print(data)
 
     show(data)
+    plt.gca().set_title('Energy consumption')
 
     plt.show()
