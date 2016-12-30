@@ -1,6 +1,5 @@
 # electricity data
 ---
-type: electricity
 unit: kWh
 groups:
   - style:

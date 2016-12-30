@@ -11,9 +11,6 @@ def read_data(filename):
     assert len(d) == 1
     doc = d[0]
 
-    tpe = doc['type']
-    assert tpe in ['water', 'electricity']
-
     groups = []
     for group in doc['groups']:
         groups.append({
@@ -33,7 +30,7 @@ def read_data(filename):
                 'values': [datum['value'] for datum in meter['data']],
                 })
 
-    return tpe, groups
+    return doc['unit'], groups
 
 
 def average_per_second(datetimes, values):
@@ -92,7 +89,7 @@ def harmonize_groups(groups):
     return X_combined, groups
 
 
-def show(groups):
+def show(unit, groups):
     # harmonize x values across all groups
     X_combined, groups = harmonize_groups(groups)
 
@@ -114,7 +111,6 @@ def show(groups):
 
     colors = []
     for group in groups:
-        print(group)
         colors.append(group['style']['color'])
 
     plt.stackplot(
@@ -132,12 +128,16 @@ def show(groups):
 
     ytop = 1.1 * max(ysum)
     ax1.set_ylim(0, ytop)
-    ax1.set_ylabel('kWh per year')
 
-    ax2.set_ylim(0, ytop * 1000 / (24 * 365.))
-    ax2.set_ylabel('W')
+    ax1.set_ylabel('%s per year' % unit)
 
-    # ax1.fill_between(x, y, color='#2ca02c')
+    assert unit in ['kWh', 'm^3']
+    if unit == 'kWh':
+        ax2.set_ylim(0, ytop * 1000 / (24 * 365.))
+        ax2.set_ylabel('W')
+    else:  # unit == 'm^3'
+        ax2.set_ylim(0, ytop * 1000 / 365.)
+        ax2.set_ylabel('liters per day')
 
     return
 
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     args = _parse_cmd_arguments()
     infile = args.infile
 
-    tpe, groups = read_data(infile)
+    unit, groups = read_data(infile)
     # add average per second between the datetimes
     for group in groups:
         for meter in group['meters']:
@@ -178,7 +178,6 @@ if __name__ == '__main__':
             'style': group['style'],
             })
 
-    show(data)
-    plt.gca().set_title('Energy consumption')
+    show(unit, data)
 
     plt.show()
