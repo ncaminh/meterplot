@@ -11,8 +11,6 @@ dist: trusty
 language: python
 
 python:
-    # Get python 2.7 back in once travis bug
-    # <https://github.com/travis-ci/travis-ci/issues/4948> is solved.
     - '2.7'
     - '3.4'
     #- '3.5.0'
@@ -34,7 +32,9 @@ install:
   - sudo -H pip install .
   - sudo -H pip3 install .
 
-# right now, the test is only to confirm that watts installs alright
 script:
   - cd test/
   - pytest
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
