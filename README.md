@@ -1,25 +1,34 @@
 # watts
 
 This little script takes a number of energy measurements (e.g., from your
-electricity meter or old power bills) and displays the wattage over time.
+electricity meter or old power bills) and displays the consumption over time.
+Works for electricity and water readings.
 
 For example, with the data file
 ```yaml
 # electricity data
 ---
-type: electricity
 unit: kWh
-data:
-  - date: 2016-01-01 00:00
-    value: 1000
-  - date: 2016-02-01 00:00
-    value: 1200
-  - date: 2016-04-01 00:00
-    value: 2000
-  - date: 2016-07-01 00:00
-    value: 3500
-  - date: 2016-10-01 00:00
-    value: 4000
+groups:
+  - style:
+      color: '#2ca02c'
+    meters:
+      - data:
+          - date: 2016-01-01T00:00:00+00:00
+            value: 1000
+          - date: 2016-02-01T00:00:00+00:00
+            value: 1200
+          - date: 2016-04-01T00:00:00+00:00
+            value: 2000
+          - date: 2016-07-01T00:00:00+00:00
+            value: 3500
+          - date: 2016-10-01T00:00:00+00:00
+            value: 4000
+      - data:
+          - date: 2015-01-01T00:00:00+00:00
+            value: 0
+          - date: 2016-03-01T00:00:00+00:00
+            value: 100
 ```
 you'll get
 ```
@@ -28,7 +37,48 @@ you'll get
 
 ![](https://nschloe.github.io/watts/example.png)
 
-The `value`s are assumed to be given in kWh.
+Input of water data is equally easy (here for warm and cold water, with a meter
+change)
+```yaml
+# Water data
+---
+unit: m^3
+
+groups:
+  # warm
+  - style:
+      color: '#d62728'
+    meters:
+      - id: abc123
+        data:
+          - date: 2013-01-01T00:00:00+00:00
+            value: 0.0
+          - date: 2013-07-01T00:00:00+00:00
+            value: 2.0
+          - date: 2014-01-01T00:00:00+00:00
+            value: 3.0
+      - id: abc124
+        data:
+          - date: 2014-01-01T00:00:00+00:00
+            value: 0.0
+          - date: 2014-07-01T00:00:00+00:00
+            value: 1.0
+          - date: 2015-01-01T00:00:00+00:00
+            value: 2.0
+
+  # cold
+  - style:
+      color: '#1f77b4'
+    meters:
+      - id: def123
+        data:
+          - date: 2012-01-01T00:00:00+00:00
+            value: 0.0
+          - date: 2014-07-01T00:00:00+00:00
+            value: 1.0
+          - date: 2015-01-01T00:00:00+00:00
+            value: 2.0
+```
 
 ### License
 
