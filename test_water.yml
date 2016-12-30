@@ -1,0 +1,38 @@
+# Water data
+---
+unit: m^3
+
+groups:
+  # warm
+  - style:
+      color: '#d62728'
+    meters:
+      - id: abc123
+        data:
+          - date: 2013-01-01T00:00:00+00:00
+            value: 0.0
+          - date: 2013-07-01T00:00:00+00:00
+            value: 2.0
+          - date: 2014-01-01T00:00:00+00:00
+            value: 3.0
+      - id: abc124
+        data:
+          - date: 2014-01-01T00:00:00+00:00
+            value: 0.0
+          - date: 2014-07-01T00:00:00+00:00
+            value: 1.0
+          - date: 2015-01-01T00:00:00+00:00
+            value: 2.0
+
+  # cold
+  - style:
+      color: '#1f77b4'
+    meters:
+      - id: def123
+        data:
+          - date: 2012-01-01T00:00:00+00:00
+            value: 0.0
+          - date: 2014-07-01T00:00:00+00:00
+            value: 1.0
+          - date: 2015-01-01T00:00:00+00:00
+            value: 2.0
