@@ -29,10 +29,10 @@ addons:
       - python3-matplotlib
 
 before_install:
-  - sudo pip install -r requirements.txt
+  - sudo -H pip install -r requirements.txt
 
 install:
-  - sudo pip install .
+  - sudo -H pip install .
 
 # right now, the test is only to confirm that watts installs alright
 script:
