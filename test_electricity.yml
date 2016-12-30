@@ -4,7 +4,7 @@ type: electricity
 unit: kWh
 groups:
   - style:
-      - color: g
+      color: '#2ca02c'
     meters:
       - id: abc123
         data:

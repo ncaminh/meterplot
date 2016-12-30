@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
-# from datetime import datetime
 from itertools import groupby
 import yaml
 
@@ -15,9 +14,12 @@ def read_data(filename):
     tpe = doc['type']
     assert tpe in ['water', 'electricity']
 
-    data = []
+    groups = []
     for group in doc['groups']:
-        data.append([])
+        groups.append({
+            'style': group['style'],
+            'meters': [],
+            })
         for meter in group['meters']:
             # assert that the dates are sorted chronologically
             datetimes = [datum['date'] for datum in meter['data']]
@@ -26,25 +28,12 @@ def read_data(filename):
                 diff_in_secs = diff.days * 24 * 3600 + diff.seconds
                 assert diff_in_secs > 0
 
-            data[-1].append({
+            groups[-1]['meters'].append({
                 'datetimes': datetimes,
-                'values': [datum['value'] for datum in meter['data']]
+                'values': [datum['value'] for datum in meter['data']],
                 })
 
-    return tpe, data
-
-
-def _parse_cmd_arguments():
-    import argparse
-    parser = argparse.ArgumentParser(
-        description='Show energy consumption data'
-        )
-    parser.add_argument(
-            'infile',
-            type=str,
-            help='input data YAML file'
-            )
-    return parser.parse_args()
+    return tpe, groups
 
 
 def average_per_second(datetimes, values):
@@ -83,7 +72,7 @@ def merge_meters(meters):
             for kk in range(k0, k1):
                 averages_combined[kk] += meter['aps'][k]
 
-    return {'datetimes': datetimes_combined, 'aps': averages_combined}
+    return datetimes_combined, averages_combined
 
 
 def harmonize_groups(groups):
@@ -123,10 +112,14 @@ def show(groups):
         for group in groups
         ]
 
+    colors = []
+    for group in groups:
+        print(group)
+        colors.append(group['style']['color'])
+
     plt.stackplot(
         x, y,
-        colors=('#d62728', '#1f77b4')
-        # colors=('#2ca02c', )
+        colors=colors
         )
 
     ax1 = plt.gca()
@@ -149,21 +142,41 @@ def show(groups):
     return
 
 
+def _parse_cmd_arguments():
+    import argparse
+    parser = argparse.ArgumentParser(
+        description='Show energy consumption data'
+        )
+    parser.add_argument(
+            'infile',
+            type=str,
+            help='input data YAML file'
+            )
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
     args = _parse_cmd_arguments()
     infile = args.infile
 
-    tpe, data = read_data(infile)
+    tpe, groups = read_data(infile)
     # add average per second between the datetimes
-    for group in data:
-        for meter in group:
+    for group in groups:
+        for meter in group['meters']:
             meter['aps'] = average_per_second(
                 meter['datetimes'],
                 meter['values']
                 )
 
     # merge across meters
-    data = [merge_meters(group) for group in data]
+    data = []
+    for group in groups:
+        datetimes_combined, averages_combined = merge_meters(group['meters'])
+        data.append({
+            'datetimes': datetimes_combined,
+            'aps': averages_combined,
+            'style': group['style'],
+            })
 
     show(data)
     plt.gca().set_title('Energy consumption')
