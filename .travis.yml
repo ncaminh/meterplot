@@ -27,6 +27,7 @@ before_install:
   - sudo apt-get -y install python-pip python3-pip
   - sudo apt-get -y install python-yaml python3-yaml
   - sudo -H pip install -r requirements.txt
+  - pip install pytest-cov
 
 install:
   - sudo -H pip install .
@@ -34,7 +35,7 @@ install:
 
 script:
   - cd test/
-  - pytest
+  - pytest --cov watts
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
