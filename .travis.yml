@@ -20,6 +20,8 @@ python:
 virtualenv:
   system_site_packages: true
 
+cache: pip
+
 addons:
   apt:
     packages:
