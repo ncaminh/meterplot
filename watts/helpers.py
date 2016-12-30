@@ -82,7 +82,8 @@ def harmonize_groups(groups):
     for group in groups:
         group['combined data'] = [0.0] * (len(X_combined) - 1)
         for i in range(len(X_combined) - 1):
-            for t, val in reversed(zip(group['datetimes'], group['aps'])):
+            z = zip(group['datetimes'], group['aps'])
+            for t, val in reversed(list(z)):
                 if t <= X_combined[i]:
                     group['combined data'][i] = val
                     break
