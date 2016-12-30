@@ -34,9 +34,5 @@ install:
 
 # right now, the test is only to confirm that watts installs alright
 script:
-  - cd /
-  - python -c "import os
-import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    mpl.use('Agg')
-import watts"
+  - cd test/
+  - pytest
