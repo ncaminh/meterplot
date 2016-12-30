@@ -1,5 +1,6 @@
 # watts
 
+[![Build Status](https://travis-ci.org/nschloe/watts.svg?branch=master)](https://travis-ci.org/nschloe/watts)
 [![Code Health](https://landscape.io/github/nschloe/watts/master/landscape.png)](https://landscape.io/github/nschloe/watts/master)
 [![PyPi Version](https://img.shields.io/pypi/v/watts.svg)](https://pypi.python.org/pypi/watts)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/watts.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/watts)
