@@ -12,4 +12,4 @@ __version__ = '0.1.0'
 __maintainer__ = 'Nico Schlömer'
 __status__ = 'Alpha'
 
-import a
+from helpers import *
