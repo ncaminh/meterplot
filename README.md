@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/nschloe/watts.svg?branch=master)](https://travis-ci.org/nschloe/watts)
 [![Code Health](https://landscape.io/github/nschloe/watts/master/landscape.png)](https://landscape.io/github/nschloe/watts/master)
+[![codecov](https://codecov.io/gh/nschloe/watts/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/watts)
 [![PyPi Version](https://img.shields.io/pypi/v/watts.svg)](https://pypi.python.org/pypi/watts)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/watts.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/watts)
 
