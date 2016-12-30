@@ -38,5 +38,8 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Multimedia :: Graphics :: Presentation',
         'Topic :: Scientific/Engineering :: Visualization'
+        ],
+    scripts=[
+        'tools/watts'
         ]
     )

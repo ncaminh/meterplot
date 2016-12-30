@@ -28,18 +28,13 @@ groups:
             value: 3500
           - date: 2016-10-01T00:00:00+00:00
             value: 4000
-      - data:
-          - date: 2015-01-01T00:00:00+00:00
-            value: 0
-          - date: 2016-03-01T00:00:00+00:00
-            value: 100
 ```
 you'll get
 ```
-watts test.yml
+watts electricity.yml
 ```
 
-![](https://nschloe.github.io/watts/example.png)
+![](https://nschloe.github.io/watts/electricity.png)
 
 Input of water data is equally easy (here for warm and cold water, with a meter
 change)
@@ -58,17 +53,17 @@ groups:
           - date: 2013-01-01T00:00:00+00:00
             value: 0.0
           - date: 2013-07-01T00:00:00+00:00
-            value: 2.0
+            value: 16.6
           - date: 2014-01-01T00:00:00+00:00
-            value: 3.0
+            value: 30.0
       - id: abc124
         data:
           - date: 2014-01-01T00:00:00+00:00
             value: 0.0
           - date: 2014-07-01T00:00:00+00:00
-            value: 1.0
+            value: 15.2
           - date: 2015-01-01T00:00:00+00:00
-            value: 2.0
+            value: 25.1
 
   # cold
   - style:
@@ -76,13 +71,20 @@ groups:
     meters:
       - id: def123
         data:
-          - date: 2012-01-01T00:00:00+00:00
+          - date: 2013-01-01T00:00:00+00:00
             value: 0.0
+          - date: 2013-04-01T00:00:00+00:00
+            value: 4.0
           - date: 2014-07-01T00:00:00+00:00
-            value: 1.0
+            value: 23.0
           - date: 2015-01-01T00:00:00+00:00
-            value: 2.0
+            value: 35.1
 ```
+```
+watts electricity.yml
+```
+
+![](https://nschloe.github.io/watts/water.png)
 
 ### Distribution
 
