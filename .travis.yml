@@ -1,0 +1,38 @@
+# We cannot enable container-based infrastructure for now since we need TeXlive
+# from a PPA
+#sudo: false
+sudo: true
+dist: trusty
+
+
+# Work around travis bug:
+# https://github.com/travis-ci/travis-ci/issues/4948#issuecomment-152839021
+#language: generic
+language: python
+
+python:
+    # Get python 2.7 back in once travis bug
+    # <https://github.com/travis-ci/travis-ci/issues/4948> is solved.
+    - '2.7'
+    - '3.4'
+    #- '3.5.0'
+
+virtualenv:
+  system_site_packages: true
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get -y build-dep python-matplotlib python3-matplotlib
+
+install:
+  - sudo pip install -r requirements.txt
+  - sudo pip3 install -r requirements.txt
+  # Alternative: setup.py install.
+  # Using pip makes sure that the package is pip-compatible, too.
+  - sudo pip install .
+  - sudo pip3 install .
+
+# right now, the test is only to confirm that watts installs alright
+script:
+  - cd /
+  - python -c "import watts"
