@@ -32,7 +32,7 @@ groups:
 ```
 you'll get
 ```
-./show_data test.yml
+watts test.yml
 ```
 
 ![](https://nschloe.github.io/watts/example.png)
@@ -79,6 +79,18 @@ groups:
           - date: 2015-01-01T00:00:00+00:00
             value: 2.0
 ```
+
+### Distribution
+
+To create a new release
+
+1. bump the `__version__` number,
+
+2. publish to PyPi and GitHub:
+    ```
+    $ make publish
+    ```
+
 
 ### License
 
