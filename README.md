@@ -50,16 +50,14 @@ groups:
   - style:
       color: '#d62728'
     meters:
-      - id: abc123
-        data:
+      - data:
           - date: 2013-01-01T00:00:00+00:00
             value: 0.0
           - date: 2013-07-01T00:00:00+00:00
             value: 16.6
           - date: 2014-01-01T00:00:00+00:00
             value: 30.0
-      - id: abc124
-        data:
+      - data:
           - date: 2014-01-01T00:00:00+00:00
             value: 0.0
           - date: 2014-07-01T00:00:00+00:00
@@ -71,8 +69,7 @@ groups:
   - style:
       color: '#1f77b4'
     meters:
-      - id: def123
-        data:
+      - data:
           - date: 2013-01-01T00:00:00+00:00
             value: 0.0
           - date: 2013-04-01T00:00:00+00:00
