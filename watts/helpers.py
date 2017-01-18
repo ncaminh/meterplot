@@ -122,6 +122,8 @@ def show(unit, groups):
     ax1 = plt.gca()
     ax2 = ax1.twinx()
 
+    ax1.set_xlim(min(x), max(x))
+
     ysum = [0.0] * len(y[0])
     for k in range(len(y)):
         for i in range(len(y[k])):
