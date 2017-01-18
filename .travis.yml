@@ -13,6 +13,8 @@ before_install:
   - pip install pytest pytest-cov
 
 install:
+  # pip doesn't do dependency resolution yet :(
+  - pip install appdirs
   - pip install -r requirements.txt
   - pip install .
 
