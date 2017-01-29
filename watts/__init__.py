@@ -15,3 +15,9 @@ from watts.__about__ import (
     )
 
 from watts.helpers import *
+
+import pipdated
+if pipdated.needs_checking(__name__):
+    msg = pipdated.check(__name__, __version__)
+    if msg:
+        print(msg)
