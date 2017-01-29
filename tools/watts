@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import argparse
 import matplotlib.pyplot as plt
-import pipdated
 import watts
+
+plt.style.use('ggplot')
 
 
 def _parse_cmd_arguments():
@@ -18,11 +19,6 @@ def _parse_cmd_arguments():
 
 
 if __name__ == '__main__':
-
-    if pipdated.needs_checking(watts.__name__):
-        msg = pipdated.check(watts.__name__, watts.__version__)
-        print(msg)
-
     args = _parse_cmd_arguments()
     infile = args.infile
 

@@ -6,21 +6,14 @@ python:
     - '2.7'
     - '3.4'
 
-virtualenv:
-  system_site_packages: true
-
 before_install:
   - pip install pytest pytest-cov
 
 install:
-  # pip doesn't do dependency resolution yet :(
-  - pip install appdirs requests
-  - pip install -r requirements.txt
   - pip install .
 
 script:
-  - cd test/
-  - pytest --cov watts
+  - cd test/ && pytest --cov watts
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
