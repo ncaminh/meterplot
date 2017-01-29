@@ -4,7 +4,11 @@ from distutils.core import setup
 import os
 import codecs
 
-from watts import __version__, __license__, __author__, __email__
+# https://packaging.python.org/single_source_version/
+base_dir = os.path.abspath(os.path.dirname(__file__))
+about = {}
+with open(os.path.join(base_dir, 'watts', '__about__.py')) as f:
+    exec(f.read(), about)
 
 
 def read(fname):
@@ -17,14 +21,15 @@ def read(fname):
         content = ''
     return content
 
+
 setup(
     name='watts',
-    version=__version__,
+    version=about['__version__'],
     packages=['watts'],
     url='https://github.com/nschloe/watts',
     download_url='https://pypi.python.org/pypi/watts',
-    author=__author__,
-    author_email=__email__,
+    author=about['__author__'],
+    author_email=about['__email__'],
     install_requires=[
         'matplotlib',
         'pipdated',
@@ -32,7 +37,7 @@ setup(
         ],
     description='display energy consumption data',
     long_description=read('README.rst'),
-    license=__license__,
+    license=about['__license__'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
