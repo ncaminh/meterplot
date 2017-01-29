@@ -25,7 +25,11 @@ setup(
     download_url='https://pypi.python.org/pypi/watts',
     author=__author__,
     author_email=__email__,
-    requires=['matplotlib', 'pipdated', 'pyyaml'],
+    install_requires=[
+        'matplotlib',
+        'pipdated',
+        'pyyaml'
+        ],
     description='display energy consumption data',
     long_description=read('README.rst'),
     license=__license__,

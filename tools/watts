@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import pipdated
 import watts
 
+plt.style.use('ggplot')
+
 
 def _parse_cmd_arguments():
     parser = argparse.ArgumentParser(
