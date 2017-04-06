@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from distutils.core import setup
-import os
 import codecs
+import os
+from setuptools import setup, find_packages
 
 # https://packaging.python.org/single_source_version/
 base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -25,7 +25,7 @@ def read(fname):
 setup(
     name='watts',
     version=about['__version__'],
-    packages=['watts'],
+    packages=find_packages(),
     url='https://github.com/nschloe/watts',
     download_url='https://pypi.python.org/pypi/watts',
     author=about['__author__'],
