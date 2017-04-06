@@ -10,7 +10,6 @@ from watts.__about__ import (
     __credits__,
     __license__,
     __version__,
-    __maintainer__,
     __status__
     )
 
