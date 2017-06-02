@@ -95,51 +95,65 @@ def show(unit, groups):
     X_combined, groups = harmonize_groups(groups)
 
     # duplicate all interior values for plotting the discontinuous data set
-    dt = X_combined
-    x = [dt[0]] + \
-        [d for d in dt[1:-1] for _ in (0, 1)] + \
-        [dt[-1]]
+    x = [X_combined[0]] + \
+        [d for d in X_combined[1:-1] for _ in (0, 1)] + \
+        [X_combined[-1]]
 
+    # set up axes
+    ax1 = plt.gca()
+    ax1.set_xlim(min(x), max(x))
+    ax2 = ax1.twinx()
+    ax2.set_xlim(min(x), max(x))
+
+    # We need to tie the actual data to the second axes. This is because
+    # everything from the second axos has a higher z-value as everything from
+    # the first axis, including the data. Even if we decide to draw grid lines
+    # behind the plot, grid lines of the second axis will always overlap the
+    # plot if it's connected ot the first axis. See
+    # <https://github.com/matplotlib/matplotlib/issues/7984>.
+    # Hence, scale the data to the units of the second axis.
+    if unit == 'kWh':
+        # kWh per second -> watts
+        ax2.set_ylabel('W')
+        factor = 1000 * 3600
+    else:
+        assert unit == 'm^3'
+        # m^3 per second -> liters per day
+        ax2.set_ylabel('liters per day')
+        factor = 1000 * 3600 * 24
     y = [
         [
-            # average per second -> average per year
-            val * (365 * 24 * 3600)
+            val * factor
             for val in group['combined data']
             for _ in (0, 1)
         ]
         for group in groups
         ]
 
-    colors = []
-    for group in groups:
-        colors.append(group['style']['color'])
-
-    plt.stackplot(
-        x, y,
-        colors=colors
-        )
-
-    ax1 = plt.gca()
-    ax2 = ax1.twinx()
-
-    ax1.set_xlim(min(x), max(x))
-
     ysum = [0.0] * len(y[0])
     for k in range(len(y)):
         for i in range(len(y[k])):
             ysum[i] += y[k][i]
-
     ytop = 1.1 * max(ysum)
-    ax1.set_ylim(0, ytop)
+    ax2.set_ylim(0.0, ytop)
 
-    ax1.set_ylabel('%s per year' % unit)
+    colors = []
+    for group in groups:
+        colors.append(group['style']['color'])
 
-    assert unit in ['kWh', 'm^3']
+    ax2.stackplot(x, y, colors=colors)
+
+    # Set the scale of the first axis. Since the data is connected to the
+    # second axis, we could scale however we want here without distorting the
+    # plot.
     if unit == 'kWh':
-        ax2.set_ylim(0, ytop * 1000 / (24 * 365.))
-        ax2.set_ylabel('W')
-    else:  # unit == 'm^3'
-        ax2.set_ylim(0, ytop * 1000 / 365.)
-        ax2.set_ylabel('liters per day')
+        # Watts -> kWh per year
+        ax1.set_ylabel('kWh per year')
+        ax1.set_ylim(0.0, ytop * 24 * 365 / 1000.0)
+    else:
+        assert unit == 'm^3'
+        # liters per day -> m^3 per year
+        ax1.set_ylabel('m^3 per year')
+        ax1.set_ylim(0.0, ytop * 365.0 / 1000.0)
 
     return
