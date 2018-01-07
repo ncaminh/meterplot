@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/nschloe/watts.svg?branch=master)](https://travis-ci.org/nschloe/watts)
 [![codecov](https://codecov.io/gh/nschloe/watts/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/watts)
 [![PyPi Version](https://img.shields.io/pypi/v/watts.svg)](https://pypi.python.org/pypi/watts)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/watts.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/watts)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/watts.svg?style=social&label=Stars)](https://github.com/nschloe/watts)
 
 This little script takes a number of energy measurements (e.g., from your
 electricity meter or old power bills) and displays the consumption over time.
