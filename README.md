@@ -1,9 +1,9 @@
-# watts
+# meterplot
 
-[![Build Status](https://travis-ci.org/nschloe/watts.svg?branch=master)](https://travis-ci.org/nschloe/watts)
-[![codecov](https://codecov.io/gh/nschloe/watts/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/watts)
-[![PyPi Version](https://img.shields.io/pypi/v/watts.svg)](https://pypi.python.org/pypi/watts)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/watts.svg?style=social&label=Stars)](https://github.com/nschloe/watts)
+[![Build Status](https://travis-ci.org/nschloe/meterplot.svg?branch=master)](https://travis-ci.org/nschloe/meterplot)
+[![codecov](https://codecov.io/gh/nschloe/meterplot/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/meterplot)
+[![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg)](https://pypi.python.org/pypi/meterplot)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?style=social&label=Stars)](https://github.com/nschloe/meterplot)
 
 This little script takes a number of energy measurements (e.g., from your
 electricity meter or old power bills) and displays the consumption over time.
@@ -32,10 +32,10 @@ groups:
 ```
 you'll get
 ```
-watts electricity.yml
+meterplot electricity.yml
 ```
 
-![](https://nschloe.github.io/watts/electricity.png)
+![](https://nschloe.github.io/meterplot/electricity.png)
 
 Input of water data is equally easy (here for warm and cold water, with a meter
 change)
@@ -79,10 +79,10 @@ groups:
             value: 35.1
 ```
 ```
-watts electricity.yml
+meterplot electricity.yml
 ```
 
-![](https://nschloe.github.io/watts/water.png)
+![](https://nschloe.github.io/meterplot/water.png)
 
 ### Distribution
 
@@ -98,4 +98,4 @@ To create a new release
 
 ### License
 
-watts is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+meterplot is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).

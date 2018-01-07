@@ -1,16 +1,14 @@
 import os
 import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    mpl.use('Agg')
-import watts
+import meterplot
 
 
 def _show(filename):
-    unit, groups = watts.read_data(filename)
+    unit, groups = meterplot.read_data(filename)
     # add average per second between the datetimes
     for group in groups:
         for meter in group['meters']:
-            meter['aps'] = watts.average_per_second(
+            meter['aps'] = meterplot.average_per_second(
                 meter['datetimes'],
                 meter['values']
                 )
@@ -19,14 +17,14 @@ def _show(filename):
     data = []
     for group in groups:
         datetimes_combined, averages_combined = \
-            watts.merge_meters(group['meters'])
+            meterplot.merge_meters(group['meters'])
         data.append({
             'datetimes': datetimes_combined,
             'aps': averages_combined,
             'style': group['style'],
             })
 
-    watts.show(unit, data)
+    meterplot.show(unit, data)
     return
 
 

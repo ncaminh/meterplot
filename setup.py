@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 # https://packaging.python.org/single_source_version/
 base_dir = os.path.abspath(os.path.dirname(__file__))
 about = {}
-with open(os.path.join(base_dir, 'watts', '__about__.py')) as f:
+with open(os.path.join(base_dir, 'meterplot', '__about__.py', 'rb')) as f:
     exec(f.read(), about)
 
 
@@ -23,16 +23,16 @@ def read(fname):
 
 
 setup(
-    name='watts',
+    name='meterplot',
     version=about['__version__'],
     packages=find_packages(),
-    url='https://github.com/nschloe/watts',
-    download_url='https://pypi.python.org/pypi/watts',
+    url='https://github.com/nschloe/meterplot',
+    download_url='https://pypi.python.org/pypi/meterplot',
     author=about['__author__'],
     author_email=about['__email__'],
     install_requires=[
         'matplotlib',
-        'pipdated',
+        'pipdate',
         'pyyaml'
         ],
     description='display energy consumption data',
@@ -49,6 +49,6 @@ setup(
         'Topic :: Scientific/Engineering :: Visualization'
         ],
     scripts=[
-        'tools/watts'
+        'tools/meterplot'
         ]
     )
