@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-import matplotlib.pyplot as plt
 from itertools import groupby
+
+import matplotlib.pyplot as plt
 import yaml
 
 
@@ -90,6 +91,7 @@ def harmonize_groups(groups):
     return X_combined, groups
 
 
+# pylint: disable=too-many-locals
 def show(unit, groups):
     # harmonize x values across all groups
     X_combined, groups = harmonize_groups(groups)

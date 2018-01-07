@@ -2,6 +2,7 @@
 #
 '''Display energy consumption data.
 '''
+from __future__ import print_function
 
 from .__about__ import (
     __author__,
@@ -13,6 +14,7 @@ from .__about__ import (
     __status__
     )
 
+# pylint: disable=wildcard-import
 from .helpers import *
 
 try:
