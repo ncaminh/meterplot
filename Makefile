@@ -1,4 +1,4 @@
-VERSION=$(shell python -c "import watts; print(watts.__version__)")
+VERSION=$(shell python -c "import meterplot; print(meterplot.__version__)")
 
 # Make sure we're on the master branch
 ifneq "$(shell git rev-parse --abbrev-ref HEAD)" "master"

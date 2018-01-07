@@ -13,7 +13,7 @@ install:
   - pip install .
 
 script:
-  - cd test/ && pytest --cov watts
+  - cd test/ && MPLBACKEND=Agg pytest --cov meterplot
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

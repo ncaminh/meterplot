@@ -1,6 +1,8 @@
-#!/usr/bin/env python
-import matplotlib.pyplot as plt
+# -*- coding: utf-8 -*-
+#
 from itertools import groupby
+
+import matplotlib.pyplot as plt
 import yaml
 
 
@@ -90,6 +92,7 @@ def harmonize_groups(groups):
     return X_combined, groups
 
 
+# pylint: disable=too-many-locals
 def show(unit, groups):
     # harmonize x values across all groups
     X_combined, groups = harmonize_groups(groups)
@@ -131,6 +134,7 @@ def show(unit, groups):
         ]
 
     ysum = [0.0] * len(y[0])
+    # pylint: disable=consider-using-enumerate
     for k in range(len(y)):
         for i in range(len(y[k])):
             ysum[i] += y[k][i]
