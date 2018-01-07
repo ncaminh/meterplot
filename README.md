@@ -1,6 +1,6 @@
 # meterplot
 
-[![Build Status](https://travis-ci.org/nschloe/meterplot.svg?branch=master)](https://travis-ci.org/nschloe/meterplot)
+[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/meterplot/master.svg)](https://circleci.com/gh/nschloe/meterplot/tree/master)
 [![codecov](https://codecov.io/gh/nschloe/meterplot/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/meterplot)
 [![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg)](https://pypi.python.org/pypi/meterplot)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?style=social&label=Stars)](https://github.com/nschloe/meterplot)
