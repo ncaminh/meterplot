@@ -133,6 +133,7 @@ def show(unit, groups):
         ]
 
     ysum = [0.0] * len(y[0])
+    # pylint: disable=consider-using-enumerate
     for k in range(len(y)):
         for i in range(len(y[k])):
             ysum[i] += y[k][i]
