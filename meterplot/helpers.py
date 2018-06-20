@@ -84,8 +84,13 @@ def harmonize_groups(groups):
     return X_combined, groups
 
 
-# pylint: disable=too-many-locals
-def show(unit, groups):
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(unit, groups):
     # harmonize x values across all groups
     X_combined, groups = harmonize_groups(groups)
 
