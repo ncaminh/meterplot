@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-'''Display energy consumption data.
-'''
+"""Display energy consumption data.
+"""
 from __future__ import print_function
 
 from .__about__ import (
@@ -11,8 +11,8 @@ from .__about__ import (
     __credits__,
     __license__,
     __version__,
-    __status__
-    )
+    __status__,
+)
 
 # pylint: disable=wildcard-import
 from .helpers import *
