@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run: pip3 install .
       # format and lint
-      - run: black --check setup.py meterplot/ test/*.py
+      - run: LC_ALL=C.UTF-8 black --check setup.py meterplot/ test/*.py
       - run: flake8 setup.py meterplot/ test/*.py
       # The tests
       - run: cd test/ && MPLBACKEND=Agg pytest --cov meterplot
