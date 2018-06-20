@@ -3,7 +3,7 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/meterplot/master.svg)](https://circleci.com/gh/nschloe/meterplot/tree/master)
 [![codecov](https://codecov.io/gh/nschloe/meterplot/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/meterplot)
 [![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg)](https://pypi.python.org/pypi/meterplot)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?style=social&label=Stars)](https://github.com/nschloe/meterplot)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?logo=github&label=Stars)](https://github.com/nschloe/meterplot)
 
 This little script takes a number of energy measurements (e.g., from your
 electricity meter or old power bills) and displays the consumption over time.
