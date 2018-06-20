@@ -37,5 +37,5 @@ setup(
         "Topic :: Multimedia :: Graphics :: Presentation",
         "Topic :: Scientific/Engineering :: Visualization",
     ],
-    scripts=["tools/meterplot"],
+    entry_points={"console_scripts": ["meterplot = meterplot.cli:main"]},
 )
