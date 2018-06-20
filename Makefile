@@ -3,11 +3,7 @@ VERSION=$(shell python3 -c "import meterplot; print(meterplot.__version__)")
 default:
 	@echo "\"make publish\"?"
 
-README.rst: README.md
-	pandoc README.md -o README.rst
-	python3 setup.py check -r -s || exit 1
-
-upload: setup.py README.rst
+upload: setup.py
 	# Make sure we're on the master branch
 	@if [ "$(shell git rev-parse --abbrev-ref HEAD)" != "master" ]; then exit 1; fi
 	rm -f dist/*
@@ -26,5 +22,5 @@ clean:
 	@rm -rf *.egg-info/ build/ dist/ MANIFEST
 
 lint:
-	black --check setup.py quadpy/ test/*.py
-	flake8 setup.py quadpy/ test/*.py
+	black --check setup.py meterplot/ test/*.py
+	flake8 setup.py meterplot/ test/*.py
