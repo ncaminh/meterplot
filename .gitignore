@@ -1,4 +1,4 @@
 .cache
-README.rst
 MANIFEST
 dist
+.pytest_cache/
