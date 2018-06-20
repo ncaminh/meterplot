@@ -2,7 +2,7 @@
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/meterplot/master.svg)](https://circleci.com/gh/nschloe/meterplot/tree/master)
 [![codecov](https://codecov.io/gh/nschloe/meterplot/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/meterplot)
-[![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg)](https://pypi.python.org/pypi/meterplot)
+[![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg)](https://pypi.org/project/meterplot)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?logo=github&label=Stars)](https://github.com/nschloe/meterplot)
 
 This little script takes a number of energy measurements (e.g., from your
@@ -83,6 +83,14 @@ meterplot electricity.yml
 ```
 
 ![](https://nschloe.github.io/meterplot/water.png)
+
+### Installation
+
+meterplot is [available from the Python Package Index](https://pypi.org/project/meterplot/), so with
+```
+pip install -U meterplot
+```
+you can install/upgrade.
 
 ### Distribution
 
