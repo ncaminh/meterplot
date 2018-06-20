@@ -2,6 +2,7 @@
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/meterplot/master.svg)](https://circleci.com/gh/nschloe/meterplot/tree/master)
 [![codecov](https://codecov.io/gh/nschloe/meterplot/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/meterplot)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg)](https://pypi.org/project/meterplot)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?logo=github&label=Stars)](https://github.com/nschloe/meterplot)
 
