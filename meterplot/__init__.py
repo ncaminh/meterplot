@@ -13,7 +13,8 @@ from .__about__ import (
     __status__,
 )
 
-from .helpers import read_data
+from . import cli
+from .helpers import read_data, average_per_second, merge_meters, show
 
 __all__ = [
     "__author__",
@@ -22,7 +23,11 @@ __all__ = [
     "__license__",
     "__version__",
     "__status__",
+    "cli",
     "read_data",
+    "average_per_second",
+    "merge_meters",
+    "show",
 ]
 
 try:

@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 #
+import os
+
 import meterplot
 
 
 def _show(filename):
+    this_dir = os.path.dirname(os.path.realpath(__file__))
+    filename = os.path.join(this_dir, filename)
+
     unit, groups = meterplot.read_data(filename)
     # add average per second between the datetimes
     for group in groups:
@@ -30,7 +35,9 @@ def _show(filename):
 
 def test_electricity():
     _show("test_electricity.yml")
+    return
 
 
 def test_water():
     _show("test_water.yml")
+    return

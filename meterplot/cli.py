@@ -17,12 +17,12 @@ def _get_parser():
         action="version",
         version="%(prog)s " + ("(version {})".format(__version__)),
     )
-    return parser.parse_args()
+    return parser
 
 
 def main(argv=None):
     parser = _get_parser()
-    args = parser(argv)
+    args = parser.parse_args(argv)
     infile = args.infile
 
     unit, groups = read_data(infile)
