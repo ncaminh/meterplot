@@ -29,9 +29,7 @@ def main(argv=None):
     # add average per second between the datetimes
     for group in groups:
         for meter in group["meters"]:
-            meter["aps"] = average_per_second(
-                meter["datetimes"], meter["values"]
-            )
+            meter["aps"] = average_per_second(meter["datetimes"], meter["values"])
 
     # merge across meters
     data = []
