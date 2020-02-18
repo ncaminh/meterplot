@@ -25,11 +25,3 @@ __all__ = [
     "merge_meters",
     "show",
 ]
-
-try:
-    import pipdate
-except ImportError:
-    pass
-else:
-    if pipdate.needs_checking(__name__):
-        print(pipdate.check(__name__, __version__), end="")

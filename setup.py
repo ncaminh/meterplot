@@ -21,7 +21,7 @@ setup(
     url="https://github.com/nschloe/meterplot",
     author=about["__author__"],
     author_email=about["__email__"],
-    install_requires=["matplotlib", "pipdate >=0.3.0, <0.4.0", "pyyaml"],
+    install_requires=["matplotlib", "pyyaml"],
     python_requires=">=3.6",
     description="display energy consumption data",
     long_description=read("README.md"),
