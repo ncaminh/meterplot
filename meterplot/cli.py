@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import argparse
 
 import matplotlib.pyplot as plt
@@ -16,7 +15,7 @@ def _get_parser():
         "--version",
         "-v",
         action="version",
-        version="%(prog)s " + ("(version {})".format(__version__)),
+        version="%(prog)s " + (f"(version {__version__})"),
     )
     return parser
 

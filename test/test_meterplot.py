@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import os
 
 import meterplot
@@ -28,16 +26,12 @@ def _show(filename):
                 "style": group["style"],
             }
         )
-
     meterplot.show(unit, data)
-    return
 
 
 def test_electricity():
     _show("test_electricity.yml")
-    return
 
 
 def test_water():
     _show("test_water.yml")
-    return

@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 """Display energy consumption data.
 """
-from __future__ import print_function
 
 from . import cli
 from .__about__ import (
