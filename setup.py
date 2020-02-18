@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-#
 import codecs
 import os
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 
 # https://packaging.python.org/single_source_version/
 base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -22,7 +21,8 @@ setup(
     url="https://github.com/nschloe/meterplot",
     author=about["__author__"],
     author_email=about["__email__"],
-    install_requires=["matplotlib", "pipdate >=0.3.0, <0.4.0", "pyyaml"],
+    install_requires=["matplotlib", "pyyaml"],
+    python_requires=">=3.6",
     description="display energy consumption data",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
@@ -31,9 +31,9 @@ setup(
         about["__status__"],
         about["__license__"],
         "Operating System :: OS Independent",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Multimedia :: Graphics :: Presentation",
         "Topic :: Scientific/Engineering :: Visualization",
     ],

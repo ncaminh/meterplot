@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
 import argparse
+
 import matplotlib.pyplot as plt
 
 from .__about__ import __version__
-from .helpers import read_data, average_per_second, merge_meters, show
+from .helpers import average_per_second, merge_meters, read_data, show
 
 plt.style.use("ggplot")
 
@@ -15,7 +15,7 @@ def _get_parser():
         "--version",
         "-v",
         action="version",
-        version="%(prog)s " + ("(version {})".format(__version__)),
+        version="%(prog)s " + (f"(version {__version__})"),
     )
     return parser
 

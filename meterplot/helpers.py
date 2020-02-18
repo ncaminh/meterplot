@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from itertools import groupby
 
 import matplotlib.pyplot as plt
@@ -8,7 +6,7 @@ import yaml
 
 def read_data(filename):
     stream = open(filename, "r")
-    docs = yaml.load_all(stream)
+    docs = yaml.load_all(stream, Loader=yaml.SafeLoader)
     d = [doc for doc in docs]
     assert len(d) == 1
     doc = d[0]
