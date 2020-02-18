@@ -4,17 +4,16 @@
 """
 from __future__ import print_function
 
+from . import cli
 from .__about__ import (
     __author__,
-    __email__,
     __copyright__,
+    __email__,
     __license__,
-    __version__,
     __status__,
+    __version__,
 )
-
-from . import cli
-from .helpers import read_data, average_per_second, merge_meters, show
+from .helpers import average_per_second, merge_meters, read_data, show
 
 __all__ = [
     "__author__",

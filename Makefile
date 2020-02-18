@@ -17,10 +17,16 @@ tag:
 	git tag v$(VERSION)
 	git push --tags
 
+publish: tag upload
+
 clean:
 	@find . | grep -E "(__pycache__|\.pyc|\.pyo$\)" | xargs rm -rf
 	@rm -rf *.egg-info/ build/ dist/ MANIFEST
 
+format:
+	isort -rc .
+	black .
+
 lint:
-	black --check setup.py meterplot/ test/*.py
-	flake8 setup.py meterplot/ test/*.py
+	black --check .
+	flake8 .
