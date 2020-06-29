@@ -1,16 +1,16 @@
 # meterplot
 
-[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/meterplot/master.svg)](https://circleci.com/gh/nschloe/meterplot/tree/master)
-[![codecov](https://codecov.io/gh/nschloe/meterplot/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/meterplot)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg)](https://pypi.org/project/meterplot)
+[![gh-actions](https://img.shields.io/github/workflow/status/nschloe/meterplot/ci?style=flat-square)](https://github.com/nschloe/meterplot/actions?query=workflow%3Aci)
+[![codecov](https://img.shields.io/codecov/c/github/nschloe/meterplot.svg?style=flat-square)](https://codecov.io/gh/nschloe/meterplot)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![PyPi Version](https://img.shields.io/pypi/v/meterplot.svg?style=flat-square)](https://pypi.org/project/meterplot)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/meterplot.svg?style=flat-square)](https://pypi.org/pypi/meterplot/)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/meterplot)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/meterplot.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/meterplot)
 [![PyPi downloads](https://img.shields.io/pypi/dm/meterplot.svg?style=flat-square)](https://pypistats.org/packages/meterplot)
 
-This little script takes a number of energy measurements (e.g., from your
-electricity meter or old power bills) and displays the consumption over time.
-Works for electricity and water readings.
+This little script takes a number of energy measurements (e.g., from your electricity
+meter or old power bills) and displays the consumption over time.  Works for electricity
+and water readings.
 
 For example, with the data file
 ```yaml
