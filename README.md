@@ -17,21 +17,17 @@ For example, with the data file
 # electricity data
 ---
 unit: kWh
-groups:
-  - style:
-      color: '#2ca02c'
-    meters:
-      - data:
-          - date: 2016-01-01T00:00:00+00:00
-            value: 1000
-          - date: 2016-02-01T00:00:00+00:00
-            value: 1200
-          - date: 2016-04-01T00:00:00+00:00
-            value: 2000
-          - date: 2016-07-01T00:00:00+00:00
-            value: 3500
-          - date: 2016-10-01T00:00:00+00:00
-            value: 4000
+data:
+  - date: 2016-01-01T00:00:00+00:00
+    value: 1000
+  - date: 2016-02-01T00:00:00+00:00
+    value: 1200
+  - date: 2016-04-01T00:00:00+00:00
+    value: 2000
+  - date: 2016-07-01T00:00:00+00:00
+    value: 3500
+  - date: 2016-10-01T00:00:00+00:00
+    value: 4000
 ```
 you'll get
 ```
@@ -40,49 +36,28 @@ meterplot electricity.yml
 
 ![](https://nschloe.github.io/meterplot/electricity.png)
 
-Input of water data is equally easy (here for warm and cold water, with a meter
-change)
+Input of water data is equally easy (here for warm and cold water, with a meter change)
 ```yaml
 # Water data
 ---
 unit: m^3
 
-groups:
-  # warm
-  - style:
-      color: '#d62728'
-    meters:
-      - data:
-          - date: 2013-01-01T00:00:00+00:00
-            value: 0.0
-          - date: 2013-07-01T00:00:00+00:00
-            value: 16.6
-          - date: 2014-01-01T00:00:00+00:00
-            value: 30.0
-      - data:
-          - date: 2014-01-01T00:00:00+00:00
-            value: 0.0
-          - date: 2014-07-01T00:00:00+00:00
-            value: 15.2
-          - date: 2015-01-01T00:00:00+00:00
-            value: 25.1
-
-  # cold
-  - style:
-      color: '#1f77b4'
-    meters:
-      - data:
-          - date: 2013-01-01T00:00:00+00:00
-            value: 0.0
-          - date: 2013-04-01T00:00:00+00:00
-            value: 4.0
-          - date: 2014-07-01T00:00:00+00:00
-            value: 23.0
-          - date: 2015-01-01T00:00:00+00:00
-            value: 35.1
+- data:
+    - date: 2013-01-01T00:00:00+00:00
+      value: [0.0, 0.0]
+    - date: 2013-07-01T00:00:00+00:00
+      value: [16.6, 4.0]
+    - date: 2014-01-01T00:00:00+00:00
+      value: [30.0, 23.0]
+    - date: 2014-01-01T00:00:00+00:00
+      value: [0.0, 35.1]
+    - date: 2014-07-01T00:00:00+00:00
+      value: 15.2
+    - date: 2015-01-01T00:00:00+00:00
+      value: 25.1
 ```
 ```
-meterplot electricity.yml
+meterplot water.yml
 ```
 
 ![](https://nschloe.github.io/meterplot/water.png)
