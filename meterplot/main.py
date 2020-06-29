@@ -11,24 +11,24 @@ def read_data(filename):
     doc = d[0]
 
     datetimes = numpy.array([item["date"] for item in doc["data"]])
-    values = numpy.array([item["value"] for item in doc["data"]]).T
-
-    if len(values.shape) > 1:
-        values = values.T
+    values = numpy.array([item["value"] for item in doc["data"]])
 
     return doc["unit"], datetimes, values
 
 
 def average_per_second(datetimes, values):
-    """Input: datetime, values
-    Output: average value per second between the datetimes
-    """
     assert len(datetimes) == len(values)
 
     diff = datetimes[1:] - datetimes[:-1]
     diff_in_secs = numpy.array([d.days * 24 * 3600 + d.seconds for d in diff])
     assert numpy.all(diff_in_secs > 0)
-    return ((values[1:] - values[:-1]).T / diff_in_secs).T
+
+    # if the value is negative, it means that a meter change has occurred
+    diff_vals = values[1:] - values[:-1]
+    is_neg = diff_vals < 0
+    diff_vals[is_neg] = values[1:][is_neg]
+
+    return (diff_vals.T / diff_in_secs).T
 
 
 def show(*args, **kwargs):
@@ -63,19 +63,19 @@ def plot(unit, datetimes, values):
 
     # prepare data for plotting
     dt = numpy.repeat(datetimes, 2)[1:-1]
-    vals = numpy.repeat(values, 2)
+    vals = numpy.repeat(values, 2, axis=0)
 
-    ax2.stackplot(dt, vals)
+    ax2.stackplot(dt, vals.T)
 
     # Set the scale of the first axis. Since the data is connected to the second axis,
     # we could scale however we want here without distorting the plot.
+    ylim = numpy.array(ax2.get_ylim())
     if unit == "kWh":
         # Watts -> kWh per year
         ax1.set_ylabel("kWh per year")
-        ylim = ax2.get_ylim()
-        ax1.set_ylim(ylim[0] * 24 * 365 / 1000.0, ylim[1] * 24 * 365 / 1000.0)
+        ax1.set_ylim(*(ylim * 24 * 365 / 1000))
     else:
         assert unit == "m^3"
         # liters per day -> m^3 per year
         ax1.set_ylabel("m^3 per year")
-        # ax1.set_ylim(0.0, ytop * 365.0 / 1000.0)
+        ax1.set_ylim(*(ylim * 365 / 1000))
